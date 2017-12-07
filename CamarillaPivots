@@ -1,0 +1,30 @@
+//SPCruzaley
+//December 2017
+//Simple script to generate a Camarilla Pivots
+
+study(title="Camarilla Pivots", overlay=true)
+
+maximo = security(tickerid, 'D', high)
+minimo = security(tickerid, 'D', low)
+apertura = security(tickerid, 'D', open)
+cierre = security(tickerid, 'D', close)
+
+R4 = cierre+(maximo-minimo)*1.1/2
+R3 = cierre+(maximo-minimo)*1.1/4
+R2 = cierre+(maximo-minimo)*1.1/6
+R1 = cierre+(maximo-minimo)*1.1/12
+pivote = (maximo+minimo+cierre)/3
+S1 = cierre-(maximo-minimo)*1.1/12
+S2 = cierre-(maximo-minimo)*1.1/6
+S3 = cierre-(maximo-minimo)*1.1/4
+S4 = cierre-(maximo-minimo)*1.1/2
+
+plot(R4, color = red, style=line, linewidth=2, offset=24)
+plot(R3, color = red, style=cross, linewidth=2, offset=24)
+plot(R2, color = red, style=line, linewidth=2, offset=24)
+plot(R1, color = red, style=line, linewidth=2, offset=24)
+plot(pivote, color = blue, style=line, linewidth=2, offset=24)
+plot(S1, color = black, style=line, linewidth=2, offset=24)
+plot(S2, color = black, style=line, linewidth=2, offset=24)
+plot(S3, color = black, style=cross, linewidth=2, offset=24)
+plot(S4, color = black, style=line, linewidth=2, offset=24)
