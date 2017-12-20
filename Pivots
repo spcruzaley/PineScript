@@ -3,14 +3,20 @@
 //Simple script to generate a pivots type Simple or Camarilla
 
 study(title="Pivots", overlay=true)
-showPivot = input (false, title="Pivot", type=bool)
-showSimplePivot = input (false, title="Simple pivot", type=bool)
-showCamarillaPivot = input (true, title="Camarilla pivot", type=bool)
 
-maximo = security(tickerid, 'D', high)
-minimo = security(tickerid, 'D', low)
-apertura = security(tickerid, 'D', open)
-cierre = security(tickerid, 'D', close)
+showPivot = input (true, title="Pivot", type=bool)
+showSimplePivot = input (false, title="Simple pivot", type=bool)
+showCamarillaPivot = input (false, title="Camarilla pivot", type=bool)
+
+showPerHours = input (false, title="By hour? (If not, will be by day)", type=bool)
+
+numOffset = showPerHours ? 24 : 6
+sessionToShow = showPerHours ? 'D' : 'W'
+
+maximo = security(tickerid, sessionToShow, high)
+minimo = security(tickerid, sessionToShow, low)
+apertura = security(tickerid, sessionToShow, open)
+cierre = security(tickerid, sessionToShow, close)
 
 //General pivot
 pivote = (maximo+minimo+cierre)/3
@@ -32,20 +38,20 @@ SS2 = pivote - (SR1 - SS1)
 SR2 = SR1 - (pivote - SS1)
 
 //Plot for pivote
-plot(showPivot ? pivote : na, color = blue, style=line, linewidth=2, offset=24)
+plot(showPivot ? pivote : na, color = blue, style=line, linewidth=2, offset=numOffset)
 
 //Plots for simple
-plot(showSimplePivot ? SR1 : na, color = orange, style=circles, linewidth=4, offset=24)
-plot(showSimplePivot ? SR2 : na, color = orange, style=circles, linewidth=4, offset=24)
-plot(showSimplePivot ? SS1 : na, color = navy, style=circles, linewidth=4, offset=24)
-plot(showSimplePivot ? SS2 : na, color = navy, style=circles, linewidth=4, offset=24)
+plot(showSimplePivot ? SR1 : na, color = orange, style=circles, linewidth=4, offset=numOffset)
+plot(showSimplePivot ? SR2 : na, color = orange, style=circles, linewidth=4, offset=numOffset)
+plot(showSimplePivot ? SS1 : na, color = navy, style=circles, linewidth=4, offset=numOffset)
+plot(showSimplePivot ? SS2 : na, color = navy, style=circles, linewidth=4, offset=numOffset)
 
 //Plots for camarilla
-plot(showCamarillaPivot ? R4 : na, color = red, style=line, linewidth=1, offset=24)
-plot(showCamarillaPivot ? R3 : na, color = red, style=line, linewidth=3, offset=24)
-plot(showCamarillaPivot ? R2 : na, color = red, style=line, linewidth=1, offset=24)
-plot(showCamarillaPivot ? R1 : na, color = red, style=line, linewidth=1, offset=24)
-plot(showCamarillaPivot ? S1 : na, color = black, style=line, linewidth=1, offset=24)
-plot(showCamarillaPivot ? S2 : na, color = black, style=line, linewidth=1, offset=24)
-plot(showCamarillaPivot ? S3 : na, color = black, style=line, linewidth=3, offset=24)
-plot(showCamarillaPivot ? S4 : na, color = black, style=line, linewidth=1, offset=24)
+plot(showCamarillaPivot ? R4 : na, color = red, style=line, linewidth=1, offset=numOffset)
+plot(showCamarillaPivot ? R3 : na, color = red, style=line, linewidth=3, offset=numOffset)
+plot(showCamarillaPivot ? R2 : na, color = red, style=line, linewidth=1, offset=numOffset)
+plot(showCamarillaPivot ? R1 : na, color = red, style=line, linewidth=1, offset=numOffset)
+plot(showCamarillaPivot ? S1 : na, color = black, style=line, linewidth=1, offset=numOffset)
+plot(showCamarillaPivot ? S2 : na, color = black, style=line, linewidth=1, offset=numOffset)
+plot(showCamarillaPivot ? S3 : na, color = black, style=line, linewidth=3, offset=numOffset)
+plot(showCamarillaPivot ? S4 : na, color = black, style=line, linewidth=1, offset=numOffset)
